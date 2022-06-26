@@ -171,9 +171,13 @@ Please cite our paper if you find the work useful:
   	    year={2022}
 	}
 
+## 5. FAQ
 
+1. If the image cannot be loaded in the page (mostly in the domestic network situations).
 
-## 5. License
+    [Solution Link](https://blog.csdn.net/weixin_42128813/article/details/102915578)
+
+## 6. License
 
 The source code is free for research and education use only. Any commercial use should get formal permission first.
 
