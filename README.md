@@ -70,6 +70,9 @@ PRNet can be run on Windows, Linux, or MacOS. And a GPU should be in your machin
 - Verify the current version of conda by `conda-v`
        
 - Create a virtual environment in terminal: `conda create -n PRNet python=3.6`, where `PRNet` is the name of the virtual environment, `python=3.6` sets the version of python as 3.6. 
+```
+pip install -r requirments.txt
+```
 
 ### Step 2: Install necessary packages: PyTorch
 
@@ -105,6 +108,9 @@ For example, if you downloaded it from The CLICK HERE above, it likely went into
     + Assigning your costumed path, like `--train_save` and `--train_path` in `MyTrain.py`.
     
     + Just enjoy it!
+    ```
+    python train.py
+    ```
 
 1. Testing Configuration:
 
@@ -112,7 +118,9 @@ For example, if you downloaded it from The CLICK HERE above, it likely went into
     after replacing your trained model directory (`--pth_path`).
     
     + Just enjoy it!
-    
+    ```
+    python test.py
+    ```
 
 ### Step 4: Evaluation Toolbox
 One-key evaluation toolbox is provided for benchmarking within a uniform standard. 
