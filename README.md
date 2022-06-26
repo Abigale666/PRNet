@@ -133,7 +133,7 @@ It is written in MATLAB code ([link](https://drive.google.com/file/d/1_h4_CjD5GK
 
 - Computer:
 
-     - For reference, we use e.g. NVIDIA Tesla V100 GPU of 64 GB Memory with CentOS 7.8.2003.
+     - For reference, we use e.g. NVIDIA Tesla V100 GPU of 32 GB Memory with CentOS 7.8.2003.
 
     > Note that our model also supports low memory GPU, which means you can lower the batch size
     (~419 MB per image in `apex-mode=O1`, and ~305 MB per image in `apex-mode=O2`)
