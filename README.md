@@ -22,7 +22,7 @@ or [Mingling Hong](2663321079@qq.com) via E-mail. And if you are using PRNet for
 ### 1.1. Introduction
 Accurately segmenting the insect from its original ecological image is the core technology restricting the accuracy and efficiency of automatic recognition. However, the performance of existing segmentation methods is unsatisfactory in insect images shot in wild backgrounds with several challenges: various sizes, similar colours or textures to the surroundings, transparent body parts and vague outlines.
 <p align="center">
-    <img src="imgs/salient insects and camouflaged insects.png"/> <br />
+    <img src="Imgs/salient insects and camouflaged insects.png"/> <br />
     <em> 
     Figure 1: Salient insects and camouflaged insects.
     </em>
@@ -33,7 +33,7 @@ Experimental results based on 1900 camouflaged insect images demonstrated PRNet 
 
 ### 1.2. Framework Overview
 <p align="center">
-    <img src="imgs/framework.png"/> <br />
+    <img src="Imgs/framework.png"/> <br />
     <em> 
     Figure 2: Overview of the proposed PRNet, which consists of Asymmetric Receptive Field, Self-Refinement Module, and Reverse Guidance Based Decoder. See § 2 in the paper for details.
     </em>
@@ -42,14 +42,14 @@ Experimental results based on 1900 camouflaged insect images demonstrated PRNet 
 ### 1.3. Results
 
 <p align="center">
-    <img src="imgs/qualitative_results.png"/> <br />
+    <img src="Imgs/qualitative_results.png"/> <br />
     <em> 
     Figure 3: Qualitative Results.
     </em>
 </p>
 
 <p align="center">
-    <img src="imgs/quantitative_results.png"/> <br />
+    <img src="Imgs/quantitative_results.png"/> <br />
     <em> 
     Figure 4: Quantitative Results.
     </em>
