@@ -86,7 +86,7 @@ In short, ARF captured contextual information from multi-layer features, and obt
 
 
 PRNet can be run on Windows, Linux, or MacOS. And a GPU should be in your machine, if not, use Google Colaboratory GPUs for free
-(read more [here](https://github.com/DeepLabCut/DeepLabCut/tree/master/examples#demo-4-deeplabcut-training-and-analysis-on-google-colaboratory-with-googles-gpus) and there are a lot of helper videos on [our YouTube channel!](https://www.youtube.com/playlist?list=PLjpMSEOb9vRFwwgIkLLN1NmJxFprkO_zi)).
+(a lot of helper videos on [our YouTube channel!](https://www.youtube.com/playlist?list=PLjpMSEOb9vRFwwgIkLLN1NmJxFprkO_zi)).
 
 ### Step 1: You need to have Python virtual environment installed
 
@@ -164,7 +164,7 @@ It is written in MATLAB code ([link](https://drive.google.com/file/d/1_h4_CjD5GK
 - Computer Hardware:
      - Ideally, you will use a strong GPU with *at least* 8GB memory such as the [NVIDIA GeForce 1080 Ti or 2080 Ti](https://www.nvidia.com/en-us/shop/geforce/?page=1&limit=9&locale=en-us).  
      
-      The ONLY thing you need to do **first** if you have an NVIDIA GPU and the matching NVIDIA CUDA+driver installed.
+      The ONLY thing you need to do first if you have an NVIDIA GPU and the matching NVIDIA CUDA+driver installed.
 
       - CUDA: https://developer.nvidia.com/cuda-downloads (just follow the prompts here!)
 
