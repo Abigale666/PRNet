@@ -14,8 +14,8 @@
 - This repository provides the source code and evaluation toolbox for "_**Camouflaged insect segmentation using progressive refinement network**_". 
 
 
-- If you have any questions about our paper, feel free to contact [Jing Wang](wangjingsay@gmail.com) 
-or [Mingling Hong](2663321079@qq.com) via E-mail. And if you are using PRNet for your research, please cite this paper.
+- If you have any questions about our paper, feel free to contact Jing Wang <wangjingsay@gmail.com>
+or Mingling Hong <2663321079@qq.com> via E-mail. And if you are using PRNet for your research, please cite this paper.
 
 ## 1. Overview
 
@@ -120,12 +120,8 @@ For example, if you downloaded it from The CLICK HERE above, it likely went into
 
     + downloading the dataset from this [download link (Google Drive)](https://drive.google.com/file/d/1i8KH2ssMpAeR3Uvj7a14F-SHt9OVnRSV/view?usp=sharing).
       Partitioning the testing dataset and training dataset into `./data/TestDataset/`,`./data/TrainDataset/`, respectively.
-    
     + downloading pretrained weights and move it into `snapshots/PRNet/`, 
     which can be found in this [download link (Google Drive)]( ).
-    
-    + downloading Res2Net weights and move it into `snapshots/Backbone/`
-     which can be found in this [download link (Google Drive)]( ).
    
 1. Training Configuration:
 
@@ -187,21 +183,6 @@ It is written in MATLAB code ([link](https://drive.google.com/file/d/1_h4_CjD5GK
     No additional processing of the imagse is required when you use the PRNet, please put the pending images into the `./data/TestDataset/` and further just run `MyTest.py` to generate the final prediction map in `save_path`.
     
 
-## 4. Citation
-
-Please cite our paper if you find the work useful: 
-
-    @inproceedings{Wang2022Camouflage,
-  	    title={Camouflaged insect segmentation using progressive refinement network},
-  	    author={Wang, Jing and Hong, Minglin and Hu, Xia and Li, Xiaolin and Huang, Shiguo and Wang, Rong and Zhang. Feiping},
-  	    booktitle={Methods in Ecology and Evolution},
-  	    year={2022}
-	}
-
-
-## 5. License
-
-The source code is free for research and education use only. Any commercial use should get formal permission first.
 
 ---
 
