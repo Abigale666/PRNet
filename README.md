@@ -12,10 +12,10 @@
 ## 0. Preface
 
 - This repository provides the source code and evaluation toolbox for "_**Camouflaged insect segmentation using progressive refinement network**_". 
-([paper]( ))
+
 
 - If you have any questions about our paper, feel free to contact [Jing Wang](wangjingsay@gmail.com) 
-or [Mingling Hong](2663321079@qq.com) via E-mail. And if you are using PRNet for your research, please cite this paper. ([BibTeX](##4-citation)).
+or [Mingling Hong](2663321079@qq.com) via E-mail. And if you are using PRNet for your research, please cite this paper.
 
 ## 1. Overview
 
