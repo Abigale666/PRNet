@@ -15,7 +15,7 @@
 ([paper]( ))
 
 - If you have any questions about our paper, feel free to contact [Jing Wang](wangjingsay@gmail.com) 
-or [Mingling Hong](2663321079@qq.com) via E-mail. And if you are using PRNet for your research, please cite this paper. ([BibTeX](#3-citation)).
+or [Mingling Hong](2663321079@qq.com) via E-mail. And if you are using PRNet for your research, please cite this paper. ([BibTeX](##4-citation)).
 
 ## 1. Overview
 
