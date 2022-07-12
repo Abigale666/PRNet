@@ -31,7 +31,10 @@ These challenges of image segmentation are accentuated when dealing with camoufl
 
 Experimental results based on 1900 camouflaged insect images demonstrated PRNet could effectively segment the camouflaged insects and achieved a superior detection performance, with the mean absolute error of 3.2\%, pixel matching degree of 89.7\%, structural similarity of 83.6\%, and precision and recall error of 72\%, which achieved the improvement of 8.1\%, 25.9\%, 19.5\%, and 35.8\%, respectively, when compared to the recent salient object detection methods.
 
-### 1.2. Framework Overview
+
+### 1.2. Method
+A particularly successful deep learning  technology when it comes to image processing is the end-to-end network model, which takes images as inputs, and directly outputs the prediction results, without requiring any hand-crafted prepossessing. This study deployed an end-to-end Progressive refinement network (PRNet). 
+
 <p align="center">
     <img src="Imgs/framework.png"/> <br />
     <em> 
@@ -39,6 +42,52 @@ Experimental results based on 1900 camouflaged insect images demonstrated PRNet 
     </em>
 </p>
 
+As the framework shown in Figure 2, it was built on an encoder-decoder architecture. Encoder mapped the input images into eigenvectors, and the decoder utilized the eigenvectors to decode the structural information about the images and output the prediction results. Notably, insects might appear with different sizes in images, thus for the encoder, the Res2Net-based backbone network, which inherited the advantages of ResNet-50 but has a stronger ability to extract multi-scale semantic features, was utilized to extract multi-level features. In specific, we designed five extractors, and each of them contains several network layers based on a Res2Net-based network. We called the first two extractors low-level extractor and the others high-level extractor, which extract low-level features $\{X_0, X_1\}$, and high-level features $\{X_2, X_3, X_4\}$, respectively. It was proved that the low-level features demanded more computational resources due to their larger spatial resolutions, but contribute less to performance . Motivated by this, our model concentrated more on high-level features rather than all features. After the encoder extracted features from insect images, the corresponding scale features from high-levels would be fed into ARF modules which aimed to extract anisotropy contextual information in the horizontal, vertical and square kernel modes from high-level features. Furthermore, a novel SRM with an initial attention strategy, aggregated the coarse information from the output of the ARF modules to generate a probable camouflage mask with coarse object region and an enhanced coarse mask. After that, this enhanced mask gradually sharpened by sequentially fusing with previous maps in the top-down decoding process. Each module proposed in this study was described as follows.
+
+
+
+#### 1.2.1 Asymmetric Receptive Field
+
+Since camouflaged insects often come from natural scenes, their sizes are varied and stochastic. To handle this challenge, multiple receptive fields are widely used in object detection, which contain square kernels of different sizes (such as $k\times k$ convolutional layer with dilation rate $d$) to obtain multi-scale representation. However, such square convolutions restrict the capture of the anisotropy context existing widely in real scenes . In addition, since the camouflaged insects have similar characteristics to the surrounding environment, the standard convolutional layers with square kernels can easily introduce noise interference from the background. Therefore, the convolutions with square kernels are not applicable to camouflaged insect segmentation. 
+
+The Asymmetric Convolution block that comprises three parallel layers with $k\times k$, $1\times k$ and $k\times 1$ kernels is used to enhance the robustness of a model to rotation and learn more important information of images. As the $1\times k$ and $k\times 1$ layers have non-square kernels, they are referred as the asymmetric convolutional layers. Inspired by this, we proposed an Asymmetric Receptive Field (ARF) module to capture context dependence in the horizontal, vertical, and square kernel modes. Specifically, our ARF module included five parallel branches. In each branch, convolutional layers (Bconv) with $1\times 1$ kernel size were used to align the dimensionality of channels and generate five different features $\{{fb}_i,i=1,…,5\}$. Then, for the features $\{{fb}_1, {fb}_2, {fb}_3\}$ from first three branches, three asymmetric Bconv (shorted as Aconv) were adopted to extract local information in parallel. After that, we combined the features from the first four branches by addition and concatenation. At last, we use a $3\times 3$ Bconv to reduce the channel size of the aggregation features so that such features could be integrated with the feature $fb_5$ from the last branch. By using the ARF modules, comprehensive information $\{ef_i, i=2,3,4\}$ with integrated anisotropy context from three levels were generated, and the approximate scales of insects in images could be acquired.
+
+
+
+#### 1.2.2 Self-Refinement Module
+
+Camouflaged insects usually prevent (or facilitate) predation by changing their lower-level features (surface luminance, body pattern, colour, or texture) as per that of the surroundings, which further aggravates the difficulties of accurate insect detection.
+There is such a common view that high-level features have more global semantic information, which helps to differentiate which ones are camouflaged objects in an image. However, due to the lack of details, the camouflage regions are blurred. In contrast, low-level features have detailed information, but it is difficult to determine the camouflage regions. By integrating multi-level features, camouflaged insects can be captured. However, feature fusion across multiple levels is easy to introduce redundant information, resulting in the inaccurate location of targets. Therefore, it is necessary to reduce the differences of the three coarse features. To this end, we used the Partial Decoder Component (PDC) to extract the fusion features $f_d$ that contained high-level information. Such features then could be directly used to generate a coarse camouflaged map $S_c$, via a simple convolutional operation. 
+
+However, due to the low resolution, the coarse map generated by the fusion features was far from the ground truth mask. Inspired by Wu et al. , we formulate the generated coarse camouflaged map as an attention mask, where such an attention mechanism could help denoise the features and generate a fine-grained camouflaged map. In detail, the inputs of this SRM were the three coarse features $\{ef_i, i=4,3,2\}$. We then used a PDC to integrate these features and use a $3\times 3$ Bconv and a $1\times 1$ Bconv to extract a coarse camouflage mask $S_c$ as follows: 
+\begin{eqnarray}
+& f_d = P_d(ef_4,ef_3,ef_2), & \\
+& S_c = \mathrm{iBconv}(f_d), &
+\end{eqnarray}
+where $P_d$ uses multiplication and concatenation to gradually decrease the gap between different features, and $\mathrm{iBconv}$ denotes  a sequential operation that combines a $3\times 3$ convolution and a $1\times 1$ convolution followed by batch normalization, and a rectified linear unit (ReLU). To generate a more accurate camouflage map, we multiple this map $S_c$ with the discriminative features to obtain a discriminative feature $f_r$, which could be described as follow:
+\begin{eqnarray}
+    f_r = f_d \odot S_c,
+\end{eqnarray}
+where $\odot$ denotes element-wise multiplying. 
+Additionally, since the coarse masks generally are imprecise and coarse estimations, a $3\times 3$ Bconv and a $1\times 1$ Bconv are used to enhance the coarse mask and generate a fine-grained camouflage map $S_r$.
+
+#### 1.2.3 Self-Refinement Module
+
+According to recent biological discoveries, a key factor for camouflage is edge disruption. However, as previously described in Sec. 1.2.2, the coarse camouflage map $S_c$ was derived from the three highest layers, which could only capture a probable location of the camouflaged insect, ignoring boundary details. Moreover, direct up-sampling could further introduce more noise and make the boundary non-smooth. To this end, the RG module, which erased the predicted foreground from side-output, was proposed to refine such missing parts or details in the high-level prediction, and applied residual architecture to further refine the predicted camouflage map.
+As shown in Figure \ref{fig5}, the RG module aimed to generate the corresponding edge attention map $W_i$ by using a reverse attention map $R_i$. We further splited the feature $X_i$ with $C$ channels into $n$ groups (the number of channels in each group is $c$), and concatenated it with $n$ reverse attention maps $R_i$, so as to guide the features to focus on boundaries. To obtain a more complete camouflage map, we iteratively added the predicted result of the latter layer $S_{i+1}$ to the corresponding edge attention map $W_i$, which could be described as follows: 
+\begin{eqnarray}
+    & W_i = R_i \odot X_i, & \\
+    & x_i^1,...,x_i^m,...,x_i^n = \mathrm{split}(X_i), & \\
+    & F_i = \mathrm{concat}(x_i^1,W_i,...,x_i^m,W_i,...,x_i^n,W_i), & \\
+    & S_i = \mathrm{iBconv}(F_i) + S_{i+1}, &
+\end{eqnarray}
+Note that, this reverse attention map $R_i$ was obtained by erasing the foreground in the prediction, and it could be formulated as:
+\begin{equation}
+    R_i = 1- \sigma (U(S_{i+1})),
+\end{equation}
+where $\sigma$ is the sigmoid function, and $U$ is up-sampling operation. 
+
+In short, ARF captured contextual information from multi-layer features, and obtained the approximate scale of insects, which was a process of coarse-grained refining features. For fine-grained refinement, SRM and RG modules covered more useful information by applying an initial attention strategy on fusion features, and erasing the foreground to pay more attention to boundaries, respectively. These three modules progressively refined features from coarse to fine, so as to achieve accurate segmentation map, which explained why the approach was named Progressive Refinement Network (PRNet). Finally, we integrate the ARF, SRM and RG into the encoder-decoder architecture, and the entire network could be trained end-to-end.
 
 
 ## 2. How to use?
