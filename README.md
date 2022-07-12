@@ -39,21 +39,7 @@ Experimental results based on 1900 camouflaged insect images demonstrated PRNet 
     </em>
 </p>
 
-### 1.3. Results
 
-<p align="center">
-    <img src="Imgs/qualitative_results.png"/> <br />
-    <em> 
-    Figure 3: Qualitative Results.
-    </em>
-</p>
-
-<p align="center">
-    <img src="Imgs/quantitative_results.png"/> <br />
-    <em> 
-    Figure 4: Quantitative Results.
-    </em>
-</p>
 
 ## 2. How to use?
 
