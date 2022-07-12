@@ -118,7 +118,7 @@ For example, if you downloaded it from The CLICK HERE above, it likely went into
 
 1. Downloading necessary data:
 
-    + downloading the dataset from this [download link (Google Drive)]( ).
+    + downloading the dataset from this [download link (Google Drive)](https://drive.google.com/file/d/1i8KH2ssMpAeR3Uvj7a14F-SHt9OVnRSV/view?usp=sharing).
       Partitioning the testing dataset and training dataset into `./data/TestDataset/`,`./data/TrainDataset/`, respectively.
     
     + downloading pretrained weights and move it into `snapshots/PRNet/`, 
@@ -199,7 +199,7 @@ Please cite our paper if you find the work useful:
 	}
 
 
-## 6. License
+## 5. License
 
 The source code is free for research and education use only. Any commercial use should get formal permission first.
 
