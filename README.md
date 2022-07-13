@@ -17,7 +17,7 @@
 - If you have any questions about our paper, feel free to contact Jing Wang <wangjingsay@gmail.com>
 or Mingling Hong <2663321079@qq.com> via E-mail. And if you are using PRNet for your research, please cite this paper.
 
-## 1. Overview
+<!--## 1. Overview
 
 ### 1.1. Introduction
 Accurately segmenting the insect from its original ecological image is the core technology restricting the accuracy and efficiency of automatic recognition. However, the performance of existing segmentation methods is unsatisfactory in insect images shot in wild backgrounds with several challenges: various sizes, similar colours or textures to the surroundings, transparent body parts and vague outlines.
@@ -80,9 +80,9 @@ $$R_i = 1- \sigma (U(S_{i+1}))$$
 where $\sigma$ is the sigmoid function, and $U$ is up-sampling operation. 
 
 In short, ARF captured contextual information from multi-layer features, and obtained the approximate scale of insects, which was a process of coarse-grained refining features. For fine-grained refinement, SRM and RG modules covered more useful information by applying an initial attention strategy on fusion features, and erasing the foreground to pay more attention to boundaries, respectively. These three modules progressively refined features from coarse to fine, so as to achieve accurate segmentation map, which explained why the approach was named Progressive Refinement Network (PRNet). Finally, we integrate the ARF, SRM and RG into the encoder-decoder architecture, and the entire network could be trained end-to-end.
+-->
 
-
-## 2. How to use?
+## 1. How to use?
 
 
 PRNet can be run on Windows, Linux, or MacOS. And a GPU should be in your machine, if not, use Google Colaboratory GPUs for free
@@ -152,7 +152,7 @@ It is written in MATLAB code ([link](https://drive.google.com/file/d/1_h4_CjD5GK
 
 > Python Version: Please refer to the work of ACMMM2021 https://github.com/plemeri/UACANet 
 
-## Tips:
+## 3.Tips:
 
 - Computer:
 
