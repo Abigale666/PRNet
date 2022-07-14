@@ -15,9 +15,9 @@
 
 
 - If you have any questions about our paper, feel free to contact Jing Wang <wangjingsay@gmail.com>
-or Mingling Hong <2663321079@qq.com> via E-mail. And if you are using PRNet for your research, please cite this paper.
+or Mingling Hong <minglinhong08@gmail.com> via E-mail. And if you are using PRNet for your research, please cite it.
 
-<!--## 1. Overview
+## 1. Overview
 
 ### 1.1. Introduction
 Accurately segmenting the insect from its original ecological image is the core technology restricting the accuracy and efficiency of automatic recognition. However, the performance of existing segmentation methods is unsatisfactory in insect images shot in wild backgrounds with several challenges: various sizes, similar colours or textures to the surroundings, transparent body parts and vague outlines.
@@ -70,7 +70,7 @@ Additionally, since the coarse masks generally are imprecise and coarse estimati
 #### 1.2.3 Self-Refinement Module
 
 According to recent biological discoveries, a key factor for camouflage is edge disruption. However, as previously described in Sec. 1.2.2, the coarse camouflage map $S_c$ was derived from the three highest layers, which could only capture a probable location of the camouflaged insect, ignoring boundary details. Moreover, direct up-sampling could further introduce more noise and make the boundary non-smooth. To this end, the RG module, which erased the predicted foreground from side-output, was proposed to refine such missing parts or details in the high-level prediction, and applied residual architecture to further refine the predicted camouflage map.
-As shown in Figure \ref{fig5}, the RG module aimed to generate the corresponding edge attention map $W_i$ by using a reverse attention map $R_i$. We further splited the feature $X_i$ with $C$ channels into $n$ groups (the number of channels in each group is $c$), and concatenated it with $n$ reverse attention maps $R_i$, so as to guide the features to focus on boundaries. To obtain a more complete camouflage map, we iteratively added the predicted result of the latter layer $S_{i+1}$ to the corresponding edge attention map $W_i$, which could be described as follows: 
+As shown in Figure 2, the RG module aimed to generate the corresponding edge attention map $W_i$ by using a reverse attention map $R_i$. We further splited the feature $X_i$ with $C$ channels into $n$ groups (the number of channels in each group is $c$), and concatenated it with $n$ reverse attention maps $R_i$, so as to guide the features to focus on boundaries. To obtain a more complete camouflage map, we iteratively added the predicted result of the latter layer $S_{i+1}$ to the corresponding edge attention map $W_i$, which could be described as follows: 
 $$W_i = R_i \odot X_i$$
 $$x_i^1,...,x_i^m,...,x_i^n = \mathrm{split}(X_i)$$
 $$F_i = \mathrm{concat}(x_i^1,W_i,...,x_i^m,W_i,...,x_i^n,W_i)$$
@@ -80,12 +80,25 @@ $$R_i = 1- \sigma (U(S_{i+1}))$$
 where $\sigma$ is the sigmoid function, and $U$ is up-sampling operation. 
 
 In short, ARF captured contextual information from multi-layer features, and obtained the approximate scale of insects, which was a process of coarse-grained refining features. For fine-grained refinement, SRM and RG modules covered more useful information by applying an initial attention strategy on fusion features, and erasing the foreground to pay more attention to boundaries, respectively. These three modules progressively refined features from coarse to fine, so as to achieve accurate segmentation map, which explained why the approach was named Progressive Refinement Network (PRNet). Finally, we integrate the ARF, SRM and RG into the encoder-decoder architecture, and the entire network could be trained end-to-end.
--->
+
+#### 1.2.3 Loss Function
+PRNet was a supervised segmentation network to predict each pixel to be the insect or background, thus it was trained by minimizing the pixel position-aware (PPA) loss  of camouflage maps. PPA loss assigned different weights to different positions and paid more attention to hard pixels. PPA loss $L_{ppa}$ is formulated as:
+
+$$L_{ppa} = L_{wbce}+L_{wiou}$$
+
+where $L_{wbce}$ is a weighted binary cross entropy (BCE) loss and $L_{wiou}$ is a weighted intersection over Union (IoU) loss.
+The $L_{wbce}$ loss function is formed as following:
+$$L_{wbce} =  -\frac{1}{N} \frac{\sum_{i, j}\left(1+\gamma \alpha_{i j}\right)\left[g_{i j} \log \left(p_{i j}\right)+\left(1-g_{i j}\right) \log \left(1-p_{i j}\right)\right]}{\sum_{i, j} \gamma \alpha_{i j}}$$
+
+where $g_{ij}$ and $p_{ij}$ represent the predicted values and ground truth of the pixel at location (i,j),respectively. $N$ denotes the total number of pixels in an image and $\gamma$ is a hyperparameter. The weight $\alpha$ is calculated according to the difference between the center pixel and its surroundings which can be defined as follows:
+
+$$\alpha_{i j} = \left|\frac{\sum_{m, n \in A_{i j}} g_{m n}}{\sum_{m, n \in A_{i j}} 1}-g_{i j}\right|$$
+where $A_{ij}$ is the area surrounding the pixel (i,j). If $a_{ij}$ is large, pixel at $(i,j)$ is very different from its surroundings, which might represent an important pixel (\emph{e.g.}, outlines) and deserved more attention. Similarly, $\alpha$ was assigned to $L_{wiou}$ for emphasizing the importance of hard pixels, which could be defined as:
+$$L_{wiou} = 1-\frac{1}{N} \frac{\sum_{i, j}\left(1+\gamma \alpha_{i j}\right) g_{i j} p_{i j}}{\sum_{i, j}\left(1+\gamma \alpha_{i j}\right)\left(g_{i j}+p_{i j}-g_{i j} p_{i j}\right)}$$
 
 ## 1. How to use?
 
-
-PRNet can be run on Windows, Linux, or MacOS. And a GPU should be in your machine, if not, use Google Colaboratory GPUs for free
+PRNet can be run on Windows, Linux, or MacOS. And a GPU should be in your machine, if not, use Google Colaboratory GPUs for free.
 (a lot of helper videos on [our YouTube channel!](https://www.youtube.com/playlist?list=PLjpMSEOb9vRFwwgIkLLN1NmJxFprkO_zi)).
 
 ### Step 1: You need to have Python virtual environment installed
@@ -121,14 +134,14 @@ For example, if you downloaded it from The CLICK HERE above, it likely went into
     + downloading the dataset from this [download link (Google Drive)](https://drive.google.com/file/d/1i8KH2ssMpAeR3Uvj7a14F-SHt9OVnRSV/view?usp=sharing).
       Partitioning the testing dataset and training dataset into `./data/TestDataset/`,`./data/TrainDataset/`, respectively.
     + downloading pretrained weights and move it into `snapshots/PRNet/`, 
-    which can be found in this [download link (Google Drive)]( ).
+    which can be found in this [download link (Google Drive)](https://drive.google.com/file/d/1FGAeZ5BNHSZIUY0vSB2y7X6yYwk5VdE5/view?usp=sharing).
    
 1. Training Configuration:
 
     + Assigning your costumed path, like `--train_save` and `--train_path` in `MyTrain.py`.
     
     + Just enjoy it!
-
+    
 1. Testing Configuration:
 
     + After you download all the pre-trained model and testing dataset, just run `MyTest.py` to generate the final prediction map
