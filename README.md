@@ -9,7 +9,7 @@
 > [Rong Wang](https://lxy.fafu.edu.cn/38/8d/c6857a145549/page.psp), and 
 > [Feiping Zhang](https://lxy.fafu.edu.cn/37/7c/c6857a145276/page.psp).
 
-## 0. Preface
+## 1. Preface
 
 - This repository provides the source code and evaluation toolbox for "_**Camouflaged insect segmentation using progressive refinement network**_". 
 
@@ -17,6 +17,7 @@
 - If you have any questions about our paper, feel free to contact Jing Wang <wangjingsay@gmail.com>
 or Mingling Hong <minglinhong08@gmail.com> via E-mail. And if you are using PRNet for your research, please cite it.
 
+<!-- 
 ## 1. Overview
 
 ### 1.1. Introduction
@@ -44,15 +45,11 @@ A particularly successful deep learning  technology when it comes to image proce
 
 As the framework shown in Figure 2, it was built on an encoder-decoder architecture. Encoder mapped the input images into eigenvectors, and the decoder utilized the eigenvectors to decode the structural information about the images and output the prediction results. Notably, insects might appear with different sizes in images, thus for the encoder, the Res2Net-based backbone network, which inherited the advantages of ResNet-50 but has a stronger ability to extract multi-scale semantic features, was utilized to extract multi-level features. In specific, we designed five extractors, and each of them contains several network layers based on a Res2Net-based network. We called the first two extractors low-level extractor and the others high-level extractor, which extract low-level features $\{X_0, X_1\}$, and high-level features $\{X_2, X_3, X_4\}$, respectively. It was proved that the low-level features demanded more computational resources due to their larger spatial resolutions, but contribute less to performance . Motivated by this, our model concentrated more on high-level features rather than all features. After the encoder extracted features from insect images, the corresponding scale features from high-levels would be fed into ARF modules which aimed to extract anisotropy contextual information in the horizontal, vertical and square kernel modes from high-level features. Furthermore, a novel SRM with an initial attention strategy, aggregated the coarse information from the output of the ARF modules to generate a probable camouflage mask with coarse object region and an enhanced coarse mask. After that, this enhanced mask gradually sharpened by sequentially fusing with previous maps in the top-down decoding process. Each module proposed in this study was described as follows.
 
-
-
 #### 1.2.1 Asymmetric Receptive Field
 
 Since camouflaged insects often come from natural scenes, their sizes are varied and stochastic. To handle this challenge, multiple receptive fields are widely used in object detection, which contain square kernels of different sizes (such as $k\times k$ convolutional layer with dilation rate $d$) to obtain multi-scale representation. However, such square convolutions restrict the capture of the anisotropy context existing widely in real scenes . In addition, since the camouflaged insects have similar characteristics to the surrounding environment, the standard convolutional layers with square kernels can easily introduce noise interference from the background. Therefore, the convolutions with square kernels are not applicable to camouflaged insect segmentation. 
 
 The Asymmetric Convolution block that comprises three parallel layers with $k\times k$, $1\times k$ and $k\times 1$ kernels is used to enhance the robustness of a model to rotation and learn more important information of images. As the $1\times k$ and $k\times 1$ layers have non-square kernels, they are referred as the asymmetric convolutional layers. Inspired by this, we proposed an Asymmetric Receptive Field (ARF) module to capture context dependence in the horizontal, vertical, and square kernel modes. Specifically, our ARF module included five parallel branches. In each branch, convolutional layers (Bconv) with $1\times 1$ kernel size were used to align the dimensionality of channels and generate five different features $\{{fb}_i,i=1,…,5\}$. Then, for the features $\{{fb}_1, {fb}_2, {fb}_3\}$ from first three branches, three asymmetric Bconv (shorted as Aconv) were adopted to extract local information in parallel. After that, we combined the features from the first four branches by addition and concatenation. At last, we use a $3\times 3$ Bconv to reduce the channel size of the aggregation features so that such features could be integrated with the feature $fb_5$ from the last branch. By using the ARF modules, comprehensive information $\{ef_i, i=2,3,4\}$ with integrated anisotropy context from three levels were generated, and the approximate scales of insects in images could be acquired.
-
-
 
 #### 1.2.2 Self-Refinement Module
 
@@ -81,7 +78,7 @@ where $\sigma$ is the sigmoid function, and $U$ is up-sampling operation.
 
 In short, ARF captured contextual information from multi-layer features, and obtained the approximate scale of insects, which was a process of coarse-grained refining features. For fine-grained refinement, SRM and RG modules covered more useful information by applying an initial attention strategy on fusion features, and erasing the foreground to pay more attention to boundaries, respectively. These three modules progressively refined features from coarse to fine, so as to achieve accurate segmentation map, which explained why the approach was named Progressive Refinement Network (PRNet). Finally, we integrate the ARF, SRM and RG into the encoder-decoder architecture, and the entire network could be trained end-to-end.
 
-#### 1.2.3 Loss Function
+#### 1.2.4 Loss Function
 PRNet was a supervised segmentation network to predict each pixel to be the insect or background, thus it was trained by minimizing the pixel position-aware (PPA) loss  of camouflage maps. PPA loss assigned different weights to different positions and paid more attention to hard pixels. PPA loss $L_{ppa}$ is formulated as:
 
 $$L_{ppa} = L_{wbce}+L_{wiou}$$
@@ -96,7 +93,10 @@ $$\alpha_{i j} = \left|\frac{\sum_{m, n \in A_{i j}} g_{m n}}{\sum_{m, n \in A_{
 where $A_{ij}$ is the area surrounding the pixel (i,j). If $a_{ij}$ is large, pixel at $(i,j)$ is very different from its surroundings, which might represent an important pixel (\emph{e.g.}, outlines) and deserved more attention. Similarly, $\alpha$ was assigned to $L_{wiou}$ for emphasizing the importance of hard pixels, which could be defined as:
 $$L_{wiou} = 1-\frac{1}{N} \frac{\sum_{i, j}\left(1+\gamma \alpha_{i j}\right) g_{i j} p_{i j}}{\sum_{i, j}\left(1+\gamma \alpha_{i j}\right)\left(g_{i j}+p_{i j}-g_{i j} p_{i j}\right)}$$
 
-## 1. How to use?
+-->
+
+
+## 2. How to use?
 
 PRNet can be run on Windows, Linux, or MacOS. And a GPU should be in your machine, if not, use Google Colaboratory GPUs for free.
 (a lot of helper videos on [our YouTube channel!](https://www.youtube.com/playlist?list=PLjpMSEOb9vRFwwgIkLLN1NmJxFprkO_zi)).
@@ -163,7 +163,7 @@ It is written in MATLAB code ([link](https://drive.google.com/file/d/1_h4_CjD5GK
 
 - Just run `main.m` to get the overall evaluation results in `./res/`.
 
-> Python Version: Please refer to the work of ACMMM2021 https://github.com/plemeri/UACANet 
+> Python Version: Please refer to the work of ACMMM2021：https://github.com/plemeri/UACANet 
 
 ## 3.Tips:
 
