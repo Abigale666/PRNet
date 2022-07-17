@@ -11,7 +11,7 @@
 
 ## 1. Preface
 
-- This repository provides the source code and evaluation toolbox for "_**Camouflaged insect segmentation using progressive refinement network**_". 
+- This repository provides the source code for "_**Camouflaged insect segmentation using progressive refinement network**_". 
 
 
 - If you have any questions about our paper, feel free to contact Jing Wang <wangjingsay@gmail.com>
@@ -98,8 +98,8 @@ $$L_{wiou} = 1-\frac{1}{N} \frac{\sum_{i, j}\left(1+\gamma \alpha_{i j}\right) g
 
 ## 2. How to use?
 
-PRNet can be run on Windows, Linux, or MacOS. And a GPU should be in your machine, if not, use Google Colaboratory GPUs for free.
-(a lot of helper videos on [our YouTube channel!](https://www.youtube.com/playlist?list=PLjpMSEOb9vRFwwgIkLLN1NmJxFprkO_zi)).
+PRNet can be run on Windows, Linux, or MacOS. And a GPU should be available on your machine, if not, use Google Colaboratory GPUs for free.
+(a lot of helper videos on [YouTube](https://www.youtube.com/watch?v=GooQPDMH2Ukhttps://www.youtube.com/watch?v=PjTPyHBbPNEhttps://www.youtube.com/watch?v=Y8C1yP8pEgY)).
 
 ### Step 1: You need to have Python virtual environment installed
 
