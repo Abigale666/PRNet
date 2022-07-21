@@ -1,4 +1,4 @@
-# Camouflaged insect segmentation using progressive refinement network
+# Camouflaged insect segmentation using a progressive refinement network
 
 > **Authors:** 
 > [Jing Wang*](https://abigale666.github.io/wangjing_homepage.github.io/), 
@@ -183,13 +183,13 @@ It is written in MATLAB code ([link](https://drive.google.com/file/d/1_h4_CjD5GK
 
       - DRIVERS: https://www.nvidia.com/Download/index.aspx
      
-     - A GPU is not necessary, but on a CPU the (training and evaluation) code is considerably slower (10x) for model. You might also consider using cloud computing services like [Google cloud/amazon web services](https://github.com/DeepLabCut/DeepLabCut/issues/47) or Google Colaboratory.
+     - A GPU is not necessary, but on a CPU the (training and evaluation) code is considerably slower (10x) for model. You might also consider using cloud computing services like Google Colaboratory.
 
 
 - Software:
      - Operating System: Linux, MacOS or Windows 10. However, the authors strongly recommend Linux! *MacOS does not support NVIDIA GPUs (easily), so we only suggest this option for CPU use or a case where the user wants to label data, refine data, etc and then push the project to a cloud resource for GPU computing steps.
      
-     - Anaconda/Python3: Anaconda: a free and open source distribution of the Python programming language (download from https://www.anaconda.com/). DeepLabCut is written in Python 3 (https://www.python.org/) and not compatible with Python 2.
+     - Anaconda/Python3: Anaconda: a free and open source distribution of the Python programming language (download from https://www.anaconda.com/). PRNet is written in Python 3 (https://www.python.org/) and not compatible with Python 2.
      
  - Image Pre-process:
      - The PRNet is an end-to-end tool to segment images from any camera (cell phone cameras, grayscale, color; different manufacturers, etc.). 
